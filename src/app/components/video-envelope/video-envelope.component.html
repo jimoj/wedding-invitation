@@ -1,0 +1,19 @@
+<div class="video-container" [class.ending]="isEnding">
+  <div class="video-wrapper" [class.playing]="isPlaying">
+    <video
+      #videoElement
+      class="envelope-video"
+      (click)="onVideoClick()"
+      (ended)="onVideoEnd()"
+      playsinline
+      preload="assets/preload.png"
+    >
+      <source src="assets/video-sobre-apertura.mp4" type="video/mp4" />
+      Tu navegador no soporta el elemento video.
+    </video>
+
+    <div class="overlay-text" *ngIf="!isPlaying && !isEnding" (click)="onVideoClick()">
+      Haz click para abrir
+    </div>
+  </div>
+</div>

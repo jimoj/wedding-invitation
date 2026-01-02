@@ -1,0 +1,126 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+interface TimelineEvent {
+  time: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface CountdownTime {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent implements OnInit {
+  brideName = 'Sonia';
+  groomName = 'Jaime';
+  // 17 de octubre de 2026 a las 13:00 (mes 9 = octubre)
+  weddingDate = new Date(2026, 9, 17, 13, 0, 0);
+  weddingDateDisplay = '17 de octubre de 2026, 13:00';
+  venue = 'Jardines de la Boda';
+  venueLat = 40.4168;
+  venueLng = -3.7038;
+  eventTime = 'De 17:00h a 01:00h';
+
+  countdown: CountdownTime = {
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  };
+
+  timeline: TimelineEvent[] = [
+    {
+      time: '17:00',
+      title: 'Llegada de invitados',
+      description: 'Recepción y bienvenida',
+      icon: 'heart'
+    },
+    {
+      time: '17:30',
+      title: 'Welcome Drink',
+      description: 'Cóctel de bienvenida',
+      icon: 'wine'
+    },
+    {
+      time: '18:00',
+      title: 'Ceremonia',
+      description: 'El momento más especial del día',
+      icon: 'church'
+    },
+    {
+      time: '19:00',
+      title: 'Cóctel',
+      description: 'Aperitivos y bebidas',
+      icon: 'wine'
+    },
+    {
+      time: '21:00',
+      title: 'Banquete',
+      description: 'Cena y celebración',
+      icon: 'utensils'
+    },
+    {
+      time: '00:00',
+      title: 'Fiesta',
+      description: '¡A bailar hasta el amanecer!',
+      icon: 'music'
+    },
+    {
+      time: '03:00',
+      title: 'Fin de fiesta',
+      description: 'Despedida y buenos recuerdos',
+      icon: 'party'
+    }
+  ];
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.updateCountdown();
+    setInterval(() => this.updateCountdown(), 1000);
+  }
+
+  updateCountdown(): void {
+    const now = new Date().getTime();
+    const weddingTime = this.weddingDate.getTime();
+    const difference = weddingTime - now;
+
+    if (difference > 0) {
+      this.countdown = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60)
+      };
+    }
+  }
+
+  getGoogleCalendarLink(): string {
+    // Build UTC timestamp strings for Google Calendar (YYYYMMDDTHHMMSSZ)
+    const start = new Date(this.weddingDate);
+    const end = new Date(this.weddingDate.getTime() + 12 * 60 * 60 * 1000); // +12 horas por defecto
+    const fmt = (d: Date) => d.toISOString().replace(/[-:.]/g, '').split('T').join('T').split('Z')[0] + 'Z';
+    const startDate = fmt(start);
+    const endDate = fmt(end);
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda ${this.brideName}%20%26%20${this.groomName}&dates=${startDate}/${endDate}&location=${encodeURIComponent(this.venue)}`;
+  }
+
+  scrollToRsvp(): void {
+    const rsvpSection = document.getElementById('rsvp');
+    if (rsvpSection) {
+      rsvpSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+}

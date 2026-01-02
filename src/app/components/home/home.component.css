@@ -1,0 +1,105 @@
+/* SVG bounce animation for scroll button */
+.chevron-bounce {
+  animation: chevron-bounce 1.5s infinite;
+}
+
+@keyframes chevron-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.25rem);
+  }
+}
+
+
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+
+body {
+  background: #f6f1e9;
+  font-family: "Georgia", serif;
+}
+
+.timeline {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 80px 40px;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 150px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #cfd4d6;
+}
+
+.timeline-item {
+  width: 13%;
+  text-align: center;
+}
+
+/* Hora */
+.time {
+  background: #415a77;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+/* Icono */
+.icon {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid #cfd4d6;
+  background: #f6f1e9;
+  margin: 30px auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.icon svg {
+  width: 36px;
+  height: 36px;
+  fill: none;
+  stroke: #415a77;
+  stroke-width: 1.8;
+}
+
+/* Texto */
+.timeline-item h3 {
+  color: #415a77;
+  font-weight: normal;
+}
+
+.timeline-item p {
+  color: #8c9aa3;
+  font-size: 14px;
+}
+
+/* Hover */
+.timeline-item:hover .icon {
+  transform: scale(1.15);
+}
+
+.timeline-item:hover .time {
+  opacity: 0.5;
+  filter: blur(1px);
+}
+
