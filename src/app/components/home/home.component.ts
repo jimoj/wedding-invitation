@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Form, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { SupabaseService } from '../../services/supabase.service';
 
 interface TimelineEvent {
   time: string;
@@ -18,7 +20,7 @@ interface CountdownTime {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -57,7 +59,7 @@ export class HomeComponent implements OnInit {
       time: '18:00',
       title: 'Ceremonia',
       description: 'El momento más especial del día',
-      icon: 'church'
+      icon: 'ceremony'
     },
     {
       time: '19:00',
@@ -85,7 +87,15 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-  constructor() {}
+  rspvForm  = new FormGroup({
+    name:  new FormControl(''),
+    email:  new FormControl(''),
+    attending:  new FormControl(true),
+    guests:  new FormControl(''),
+    message:  new FormControl('')
+  });
+
+  constructor(private supabaseService: SupabaseService) {}
 
   ngOnInit(): void {
     this.updateCountdown();
@@ -121,6 +131,28 @@ export class HomeComponent implements OnInit {
     const rsvpSection = document.getElementById('rsvp');
     if (rsvpSection) {
       rsvpSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  async onSubmit(): Promise<void> {
+    if (this.rspvForm.valid) {
+      try {
+        const formData = {
+          name: this.rspvForm.value.name,
+          email: this.rspvForm.value.email,
+          attending: this.rspvForm.value.attending,
+          guests: this.rspvForm.value.guests || 1,
+          message: this.rspvForm.value.message,
+          created_at: new Date().toISOString()
+        };
+        
+        await this.supabaseService.saveRsvp(formData);
+        alert('¡Confirmación enviada correctamente!');
+        this.rspvForm.reset();
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al enviar la confirmación. Inténtalo de nuevo.');
+      }
     }
   }
 }
