@@ -132,26 +132,7 @@ export class HomeComponent implements OnInit {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
     if (isIOS) {
-
-        const icsContent = this.generateICS(
-          title,
-          start,
-          end,
-          location,
-          details
-        );
-
-        const blob = new Blob([icsContent], {
-          type: 'text/calendar;charset=utf-8',
-        });
-
-        const url = URL.createObjectURL(blob);
-
-        // Navegación directa (NO download)
-        window.location.href = url;
-
-        setTimeout(() => URL.revokeObjectURL(url), 1000);
-      
+      window.location.href = 'webcal://wedding-invitation-jaimeysonia.vercel.app/assets/boda.ics';
     } else {
       const googleUrl = this.getGoogleCalendarLink();
       window.open(googleUrl, '_blank');
