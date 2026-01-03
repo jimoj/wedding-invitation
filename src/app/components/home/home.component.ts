@@ -134,15 +134,10 @@ export class HomeComponent implements OnInit {
     const isAndroid = /Android/.test(navigator.userAgent);
 
     if (isIOS) {
-      // iOS - usar webcal o data URL
+      // iOS - usar data URL directo
       const icsContent = this.generateICS(title, start, end, location, details);
-      const blob = new Blob([icsContent], { type: 'text/calendar' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'boda.ics';
-      a.click();
-      URL.revokeObjectURL(url);
+      const dataUrl = 'data:text/calendar;charset=utf8,' + encodeURIComponent(icsContent);
+      window.location.href = dataUrl;
     } else if (isAndroid) {
       // Android - intentar Google Calendar primero
       const googleUrl = this.getGoogleCalendarLink();
