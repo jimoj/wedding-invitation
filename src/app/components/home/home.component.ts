@@ -132,7 +132,7 @@ export class HomeComponent implements OnInit {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
     if (isIOS) {
-      if (isIOS) {
+
         const icsContent = this.generateICS(
           title,
           start,
@@ -144,19 +144,14 @@ export class HomeComponent implements OnInit {
         const blob = new Blob([icsContent], {
           type: 'text/calendar;charset=utf-8',
         });
+
         const url = URL.createObjectURL(blob);
 
-        const a = document.createElement('a');
-        a.href = url;
-        a.target = '_blank';
-        a.download = 'boda.ics';
+        // Navegación directa (NO download)
+        window.location.href = url;
 
-        document.body.appendChild(a);
-        a.click();
-
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      
     } else {
       const googleUrl = this.getGoogleCalendarLink();
       window.open(googleUrl, '_blank');
