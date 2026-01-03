@@ -129,21 +129,35 @@ export class HomeComponent implements OnInit {
     const details = 'Celebración de nuestra boda. ¡Esperamos verte allí!';
     const location = this.venue;
 
-    // Detectar dispositivo
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isAndroid = /Android/.test(navigator.userAgent);
 
     if (isIOS) {
-      // iOS - usar data URL directo
-      const icsContent = this.generateICS(title, start, end, location, details);
-      const dataUrl = 'data:text/calendar;charset=utf8,' + encodeURIComponent(icsContent);
-      window.location.href = dataUrl;
-    } else if (isAndroid) {
-      // Android - intentar Google Calendar primero
-      const googleUrl = this.getGoogleCalendarLink();
-      window.open(googleUrl, '_blank');
+      if (isIOS) {
+        const icsContent = this.generateICS(
+          title,
+          start,
+          end,
+          location,
+          details
+        );
+
+        const blob = new Blob([icsContent], {
+          type: 'text/calendar;charset=utf-8',
+        });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.download = 'boda.ics';
+
+        document.body.appendChild(a);
+        a.click();
+
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
     } else {
-      // Desktop - Google Calendar
       const googleUrl = this.getGoogleCalendarLink();
       window.open(googleUrl, '_blank');
     }
