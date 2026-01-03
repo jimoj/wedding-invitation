@@ -382,6 +382,11 @@ button:focus { outline: none; }
   .section-padding { padding: 6rem 1.5rem; }
 }
 
+.align-center {
+  align-items: center;
+  text-align: center;
+}
+
 section > div:first-child {
   text-align: center;
 }
