@@ -304,6 +304,51 @@ button { cursor: pointer; }
 button:focus { outline: none; }
 
 /* Responsive */
+@media (max-width: 430px) {
+  /* iPhone 15 Pro Max y similares */
+  .section-padding {
+    padding: 2rem 1rem;
+  }
+  
+  .font-script {
+    font-size: 2rem;
+  }
+  
+  .text-4xl { font-size: 1.875rem; }
+  .text-5xl { font-size: 2.25rem; }
+  .text-6xl { font-size: 2.5rem; }
+  
+  .mb-12 { margin-bottom: 2rem; }
+  .mb-8 { margin-bottom: 1.5rem; }
+  
+  .p-6 { padding: 1rem; }
+  .p-8 { padding: 1.25rem; }
+  
+  .px-4 { padding-left: 0.75rem; padding-right: 0.75rem; }
+  .py-16 { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+  .py-12 { padding-top: 2rem; padding-bottom: 2rem; }
+  
+  .max-w-2xl { max-width: 100%; }
+  .max-w-4xl { max-width: 100%; }
+  .max-w-5xl { max-width: 100%; }
+  
+  /* Ajustes específicos para formularios */
+  .space-y-5 > * + * { margin-top: 1rem; }
+  .space-y-6 > * + * { margin-top: 1.25rem; }
+  
+  /* Botones más grandes para touch */
+  button[type="submit"] {
+    padding: 0.875rem 1rem;
+    min-height: 48px;
+  }
+  
+  /* Inputs más grandes */
+  input, textarea {
+    padding: 0.75rem;
+    font-size: 16px; /* Evita zoom en iOS */
+  }
+}
+
 @media (min-width: 768px) {
   .md\:text-base { font-size: 1rem; }
   .md\:text-lg { font-size: 1.125rem; }
