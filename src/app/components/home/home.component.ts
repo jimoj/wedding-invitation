@@ -5,6 +5,7 @@ import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { SupabaseService } from '../../services/supabase.service';
 
@@ -36,9 +37,7 @@ export class HomeComponent implements OnInit {
   weddingDate = new Date(2026, 9, 17, 13, 0, 0);
   weddingDateDisplay = '17 de octubre de 2026, 13:00';
   venue = 'Finca Condado de Cubillana';
-  venueLat = 40.4168;
-  venueLng = -3.7038;
-  eventTime = 'De 17:00h a 01:00h';
+  eventTime = 'De 13:00h a 00:00h';
 
   countdown: CountdownTime = {
     days: 0,
@@ -49,43 +48,43 @@ export class HomeComponent implements OnInit {
 
   timeline: TimelineEvent[] = [
     {
-      time: '17:00',
+      time: '12:30',
       title: 'Llegada de invitados',
       description: 'Recepción y bienvenida',
       icon: 'heart',
     },
     {
-      time: '17:30',
+      time: '12:45',
       title: 'Welcome Drink',
       description: 'Cóctel de bienvenida',
       icon: 'wine',
     },
     {
-      time: '18:00',
+      time: '13:00',
       title: 'Ceremonia',
       description: 'El momento más especial del día',
       icon: 'ceremony',
     },
     {
-      time: '19:00',
+      time: '13:30',
       title: 'Cóctel',
       description: 'Aperitivos y bebidas',
       icon: 'wine',
     },
     {
-      time: '21:00',
+      time: '15:00',
       title: 'Banquete',
       description: 'Cena y celebración',
       icon: 'utensils',
     },
     {
-      time: '00:00',
+      time: '17:00',
       title: 'Fiesta',
       description: '¡A bailar hasta el amanecer!',
       icon: 'music',
     },
     {
-      time: '03:00',
+      time: '00:00',
       title: 'Fin de fiesta',
       description: 'Despedida y buenos recuerdos',
       icon: 'party',
@@ -93,12 +92,18 @@ export class HomeComponent implements OnInit {
   ];
 
   rspvForm = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('', Validators.required),
     email: new FormControl(''),
-    attending: new FormControl(true),
+    attending: new FormControl(null, Validators.required),
     guests: new FormControl(''),
+    menutype: new FormControl<string[]>([],),
+    otherMenuType: new FormControl(''),
+    busRequired: new FormControl('', Validators.required),
     message: new FormControl(''),
   });
+
+  showOtherMenuField = false;
+  selectedMenuTypes: string[] = [];
 
   constructor(private supabaseService: SupabaseService) {}
 
@@ -128,11 +133,21 @@ export class HomeComponent implements OnInit {
     const title = `Boda ${this.brideName} & ${this.groomName}`;
     const details = 'Celebración de nuestra boda. ¡Esperamos verte allí!';
     const location = this.venue;
-
+    
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-
+    
     if (isIOS) {
-      window.location.href = 'webcal://wedding-invitation-jaimeysonia.vercel.app/assets/boda.ics';
+      const icsContent = this.generateICS(title, start, end, location, details);
+      const blob = new Blob([icsContent], { type: 'text/calendar' });
+      const url = URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'boda.ics';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     } else {
       const googleUrl = this.getGoogleCalendarLink();
       window.open(googleUrl, '_blank');
@@ -187,14 +202,37 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  onMenuTypeChange(menuType: string, event: any): void {
+    if (event.target.checked) {
+      this.selectedMenuTypes.push(menuType);
+      if (menuType === 'otros') {
+        this.showOtherMenuField = true;
+      }
+    } else {
+      this.selectedMenuTypes = this.selectedMenuTypes.filter(type => type !== menuType);
+      if (menuType === 'otros') {
+        this.showOtherMenuField = false;
+        this.rspvForm.patchValue({ otherMenuType: '' });
+      }
+    }
+    this.rspvForm.patchValue({ menutype: this.selectedMenuTypes });
+  }
+
   async onSubmit(): Promise<void> {
     if (this.rspvForm.valid) {
       try {
+        const menuTypes = [...this.selectedMenuTypes];
+        if (this.showOtherMenuField && this.rspvForm.value.otherMenuType) {
+          menuTypes.push(this.rspvForm.value.otherMenuType);
+        }
+
         const formData = {
           name: this.rspvForm.value.name,
           email: this.rspvForm.value.email,
           attending: this.rspvForm.value.attending,
           guests: this.rspvForm.value.guests || 1,
+          menutype: menuTypes,
+          busRequired: this.rspvForm.value.busRequired,
           message: this.rspvForm.value.message,
           created_at: new Date().toISOString(),
         };
@@ -202,10 +240,14 @@ export class HomeComponent implements OnInit {
         await this.supabaseService.saveRsvp(formData);
         alert('¡Confirmación enviada correctamente!');
         this.rspvForm.reset();
+        this.selectedMenuTypes = [];
+        this.showOtherMenuField = false;
       } catch (error) {
         console.error('Error:', error);
         alert('Error al enviar la confirmación. Inténtalo de nuevo.');
       }
+    } else {
+      alert('Por favor, completa los campos obligatorios.');
     }
   }
 }

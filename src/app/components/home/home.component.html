@@ -232,7 +232,7 @@
       <div class="timeline">
         @for (event of timeline; track $index) {
         <div class="timeline-item">
-          <span class="time">17:00</span>
+          <span class="time">{{event.time}}</span>
           <div class="icon">
             <svg viewBox="0 0 24 24">
               <path
@@ -399,6 +399,73 @@
             formControlName="guests"
             class="w-20 md:w-24 px-3 py-2 border border-sage/30 rounded-md bg-ivory text-sage-dark text-sm focus:outline-none focus:border-sage-dark"
           />
+        </div>
+        <div>
+          <label
+            class="text-xs md:text-sm font-medium text-sage-dark block mb-2"
+            >Tipo de menú</label
+          >
+          <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                value="vegano"
+                (change)="onMenuTypeChange('vegano', $event)"
+                class="w-4 h-4 border-sage-dark text-sage-dark"
+              />
+              <span class="text-xs md:text-sm text-sage-dark">Vegano</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                value="vegetariano"
+                (change)="onMenuTypeChange('vegetariano', $event)"
+                class="w-4 h-4 border-sage-dark text-sage-dark"
+              />
+              <span class="text-xs md:text-sm text-sage-dark">Vegetariano</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                value="celiaco"
+                (change)="onMenuTypeChange('celiaco', $event)"
+                class="w-4 h-4 border-sage-dark text-sage-dark"
+              />
+              <span class="text-xs md:text-sm text-sage-dark">Celíaco</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                value="otros"
+                (change)="onMenuTypeChange('otros', $event)"
+                class="w-4 h-4 border-sage-dark text-sage-dark"
+              />
+              <span class="text-xs md:text-sm text-sage-dark">Otros</span>
+            </label>
+            <div *ngIf="showOtherMenuField" class="ml-6">
+              <input
+                type="text"
+                placeholder="Especifica..."
+                formControlName="otherMenuType"
+                class="w-full px-3 py-2 border border-sage/30 rounded-md bg-ivory text-sage-dark text-sm focus:outline-none focus:border-sage-dark"
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <label
+            class="text-xs md:text-sm font-medium text-sage-dark block mb-2"
+            >Transporte en bus *</label
+          >
+          <select
+            formControlName="busRequired"
+            class="w-full px-3 py-2 border border-sage/30 rounded-md bg-ivory text-sage-dark text-sm focus:outline-none focus:border-sage-dark"
+          >
+            <option value="">Selecciona una opción</option>
+            <option value="leganes">Desde Leganés</option>
+            <option value="madrid">Desde Madrid</option>
+            <option value="no">No necesito, iré por mi cuenta</option>
+          </select>
         </div>
         <div>
           <label
