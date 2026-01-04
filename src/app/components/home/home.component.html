@@ -4,7 +4,7 @@
     class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-ivory px-4 md:px-6 py-12 md:py-16 hero-section"
   >
     <div
-      class="absolute inset-0"
+      class="absolute inset-0 parallax-bg"
       style="
         background-image: url('assets/IMG_9478.jpg');
         background-size: cover;
@@ -16,12 +16,12 @@
     <div
       class="relative z-10 text-center max-w-4xl mx-auto flex flex-col items-center align-center"
     >
-      <div class="mb-6 md:mb-8">
+      <div class="mb-6 md:mb-8 animate-on-scroll animate-fade-up">
         <h1 class="font-script text-4xl md:text-6xl text-ink mb-2">
           Nos casamos
         </h1>
       </div>
-      <div class="max-w-2xl mx-auto mb-8 md:mb-12 px-2">
+      <div class="max-w-2xl mx-auto mb-8 md:mb-12 px-2 animate-on-scroll animate-fade-up delay-200">
         <h2 class="font-display text-2xl md:text-5xl text-ink mb-4 md:mb-6">
           {{ brideName }} <span class="text-sage-dark">&</span> {{ groomName }}
         </h2>
@@ -69,18 +69,18 @@
   <section class="section-padding bg-ivory">
     <div class="max-w-4xl mx-auto px-2 flex flex-col items-center w-full">
       <h2
-        class="font-script text-3xl md:text-5xl text-ink mb-2 w-full text-center"
+        class="font-script text-3xl md:text-5xl text-ink mb-2 w-full text-center animate-on-scroll animate-fade-up"
       >
         Cuenta atrás
       </h2>
       <p
-        class="text-ink/70 text-sm md:text-lg font-body tracking-wide mb-8 md:mb-12 w-full text-center"
+        class="text-ink/70 text-sm md:text-lg font-body tracking-wide mb-8 md:mb-12 w-full text-center animate-on-scroll animate-fade-up delay-100"
       >
         Para el día más especial de nuestras vidas
       </p>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-8 w-full">
         <div
-          class="bg-ink/10 backdrop-blur-sm p-4 md:p-8 border border-ink/20 rounded-lg"
+          class="bg-ink/10 backdrop-blur-sm p-4 md:p-8 border border-ink/20 rounded-lg animate-on-scroll animate-scale delay-100"
         >
           <span
             class="block font-display text-2xl md:text-6xl font-light text-ink"
@@ -92,7 +92,7 @@
           >
         </div>
         <div
-          class="bg-ink/10 backdrop-blur-sm p-4 md:p-8 border border-ink/20 rounded-lg"
+          class="bg-ink/10 backdrop-blur-sm p-4 md:p-8 border border-ink/20 rounded-lg animate-on-scroll animate-scale delay-200"
         >
           <span
             class="block font-display text-2xl md:text-6xl font-light text-ink"
@@ -104,7 +104,7 @@
           >
         </div>
         <div
-          class="bg-ink/10 backdrop-blur-sm p-4 md:p-8 border border-ink/20 rounded-lg"
+          class="bg-ink/10 backdrop-blur-sm p-4 md:p-8 border border-ink/20 rounded-lg animate-on-scroll animate-scale delay-300"
         >
           <span
             class="block font-display text-2xl md:text-6xl font-light text-ink"
@@ -116,7 +116,7 @@
           >
         </div>
         <div
-          class="bg-ink/10 backdrop-blur-sm p-4 md:p-8 border border-ink/20 rounded-lg"
+          class="bg-ink/10 backdrop-blur-sm p-4 md:p-8 border border-ink/20 rounded-lg animate-on-scroll animate-scale delay-400"
         >
           <span
             class="block font-display text-2xl md:text-6xl font-light text-ink"
@@ -134,7 +134,7 @@
   <!-- Detalles Section -->
   <section class="section-padding bg-ivory">
     <div class="max-w-4xl mx-auto px-2 flex flex-col items-center w-full">
-      <div class="text-center mb-12 w-full">
+      <div class="text-center mb-12 w-full animate-on-scroll animate-fade-up">
         <h2 class="font-script text-3xl md:text-5xl text-ink mb-2">
           Detalles del día
         </h2>
@@ -142,7 +142,7 @@
           Todo lo que necesitas saber
         </p>
       </div>
-      <div class="flex flex-col items-center text-center">
+      <div class="flex flex-col items-center text-center animate-on-scroll animate-fade-up delay-200">
           <div class="icon">
             <svg viewBox="0 0 24 24">
               <path
@@ -221,7 +221,7 @@
   <!-- Timeline section -->
   <section class="section-padding bg-ivory">
     <div class="max-w-5xl mx-auto px-2 flex flex-col items-center w-full">
-      <div class="text-center mb-12 w-full">
+      <div class="text-center mb-12 w-full animate-on-scroll animate-fade-up">
         <h2 class="font-script text-3xl md:text-5xl text-ink mb-2">
           Programa del día
         </h2>
@@ -314,7 +314,7 @@
     <div
       class="max-w-2xl mx-auto px-4 md:px-8 w-full flex flex-col items-center"
     >
-      <div class="text-center mb-12 w-full">
+      <div class="text-center mb-12 w-full animate-on-scroll animate-fade-up">
         <h2 class="font-script text-3xl md:text-5xl text-sage-dark mb-2">
           Confirma tu asistencia
         </h2>
@@ -326,7 +326,7 @@
       </div>
       <form
         [formGroup]="rspvForm"
-        class="bg-white/60 backdrop-blur-sm border border-sage/20 rounded-lg p-6 md:p-8 space-y-5 md:space-y-6 shadow-sm"
+        class="bg-white/60 backdrop-blur-sm border border-sage/20 rounded-lg p-6 md:p-8 space-y-5 md:space-y-6 shadow-sm animate-on-scroll animate-scale delay-200"
       >
         <div>
           <label

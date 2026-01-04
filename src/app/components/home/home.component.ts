@@ -110,6 +110,37 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.updateCountdown();
     setInterval(() => this.updateCountdown(), 1000);
+    this.setupParallax();
+    this.setupMobileAnimations();
+  }
+
+  private setupMobileAnimations(): void {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    setTimeout(() => {
+      const timelineItems = document.querySelectorAll('.timeline-item');
+      timelineItems.forEach((item) => observer.observe(item));
+    }, 500);
+  }
+
+  private setupParallax(): void {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const parallaxElement = document.querySelector('.parallax-bg') as HTMLElement;
+      if (parallaxElement) {
+        const speed = scrolled * 0.5;
+        parallaxElement.style.setProperty('--scroll-y', `${speed}px`);
+      }
+    });
   }
 
   updateCountdown(): void {
