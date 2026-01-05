@@ -311,3 +311,46 @@ body {
 }
 
 
+/* Music control button */
+.music-control {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #6b8e71;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.music-control:hover {
+  background: #5a7a61;
+  transform: scale(1.1);
+}
+
+.music-control svg {
+  width: 24px;
+  height: 24px;
+}
+
+.music-control.playing {
+  background: #8fbc8f;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(107, 142, 113, 0.4);
+  }
+}

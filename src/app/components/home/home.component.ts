@@ -104,6 +104,8 @@ export class HomeComponent implements OnInit {
 
   showOtherMenuField = false;
   selectedMenuTypes: string[] = [];
+  isMusicPlaying = false;
+  private audio: HTMLAudioElement | null = null;
 
   constructor(private supabaseService: SupabaseService) {}
 
@@ -112,6 +114,30 @@ export class HomeComponent implements OnInit {
     setInterval(() => this.updateCountdown(), 1000);
     this.setupParallax();
     this.setupMobileAnimations();
+  }
+
+  ngAfterViewInit(): void {
+    this.initAudio();
+  }
+
+  private initAudio(): void {
+    this.audio = new Audio('assets/music.mp3');
+    this.audio.loop = true;
+    this.audio.volume = 0.3;
+    this.audio.play().catch(e => console.log('Audio play failed:', e));
+      this.isMusicPlaying = true;
+  }
+
+  toggleMusic(): void {
+    if (!this.audio) return;
+    
+    if (this.isMusicPlaying) {
+      this.audio.pause();
+      this.isMusicPlaying = false;
+    } else {
+      this.audio.play().catch(e => console.log('Audio play failed:', e));
+      this.isMusicPlaying = true;
+    }
   }
 
   private setupMobileAnimations(): void {
