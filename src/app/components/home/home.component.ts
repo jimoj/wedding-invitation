@@ -185,26 +185,13 @@ export class HomeComponent implements OnInit {
   }
 
   addToCalendar(): void {
-    const start = new Date(this.weddingDate);
-    const end = new Date(this.weddingDate.getTime() + 12 * 60 * 60 * 1000);
-    const title = `Boda ${this.brideName} & ${this.groomName}`;
-    const details = 'Celebración de nuestra boda. ¡Esperamos verte allí!';
-    const location = this.venue;
-    
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     
-    if (isIOS) {
-      const icsContent = this.generateICS(title, start, end, location, details);
-      const blob = new Blob([icsContent], { type: 'text/calendar' });
-      const url = URL.createObjectURL(blob);
-      
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'boda.ics';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+    if (isIOS || isSafari) {
+      // Use webcal protocol to open the ICS file from assets
+      const webcalUrl = `webcal://${window.location.host}/assets/boda.ics`;
+      window.location.href = webcalUrl;
     } else {
       const googleUrl = this.getGoogleCalendarLink();
       window.open(googleUrl, '_blank');
