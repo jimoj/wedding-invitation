@@ -259,6 +259,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  openGoogleMaps(): void {
+    const address = 'Finca Condado de Cubillana, Toledo, España';
+    const encodedAddress = encodeURIComponent(address);
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
+    window.open(url, '_blank');
+  }
+
   onMenuTypeChange(menuType: string, event: any): void {
     if (event.target.checked) {
       this.selectedMenuTypes.push(menuType);
