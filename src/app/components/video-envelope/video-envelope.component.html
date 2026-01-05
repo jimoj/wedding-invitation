@@ -12,8 +12,13 @@
       Tu navegador no soporta el elemento video.
     </video>
 
-    <div class="overlay-text" *ngIf="!isPlaying && !isEnding" (click)="onVideoClick()">
-      Haz click para abrir
+    <div class="overlay-content" *ngIf="!isPlaying && !isEnding" (click)="onVideoClick()">
+      <div class="subtle-indicator">
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+        <div class="pulse-ring"></div>
+      </div>
+      <p class="play-text">Toca para abrir nuestra invitación</p>
     </div>
   </div>
 </div>
