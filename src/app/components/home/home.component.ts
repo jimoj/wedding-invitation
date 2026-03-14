@@ -33,11 +33,11 @@ interface CountdownTime {
 export class HomeComponent implements OnInit {
   brideName = 'Sonia';
   groomName = 'Jaime';
-  // 17 de octubre de 2026 a las 13:00 (mes 9 = octubre)
-  weddingDate = new Date(2026, 9, 17, 13, 0, 0);
-  weddingDateDisplay = '17 de octubre de 2026, 13:00';
+  // 17 de octubre de 2026 a las 13:30 (mes 9 = octubre)
+  weddingDate = new Date(2026, 9, 17, 13, 30, 0);
+  weddingDateDisplay = '17 de octubre de 2026, 13:30';
   venue = 'Finca Condado de Cubillana';
-  eventTime = 'De 13:00h a 00:00h';
+  eventTime = 'De 13:30h a 23:30h';
 
   countdown: CountdownTime = {
     days: 0,
@@ -48,43 +48,37 @@ export class HomeComponent implements OnInit {
 
   timeline: TimelineEvent[] = [
     {
-      time: '12:30',
+      time: '13:00',
       title: 'Llegada de invitados',
       description: 'Recepción y bienvenida',
       icon: 'heart',
     },
     {
-      time: '12:45',
-      title: 'Welcome Drink',
-      description: 'Cóctel de bienvenida',
-      icon: 'wine',
-    },
-    {
-      time: '13:00',
+      time: '13:30',
       title: 'Ceremonia',
-      description: 'El momento más especial del día',
+      description: 'Y unos cuantos kleenex',
       icon: 'ceremony',
     },
     {
-      time: '13:30',
+      time: '14:30',
       title: 'Cóctel',
       description: 'Aperitivos y bebidas',
       icon: 'wine',
     },
     {
-      time: '15:00',
-      title: 'Banquete',
-      description: 'Cena y celebración',
+      time: '16:30',
+      title: 'Comida',
+      description: 'Comida y celebración',
       icon: 'utensils',
     },
     {
-      time: '17:00',
+      time: '18:30',
       title: 'Fiesta',
-      description: '¡A bailar hasta el amanecer!',
+      description: '¡A bailar y beber!',
       icon: 'music',
     },
     {
-      time: '00:00',
+      time: '23:30',
       title: 'Fin de fiesta',
       description: 'Despedida y buenos recuerdos',
       icon: 'party',

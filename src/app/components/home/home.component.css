@@ -97,7 +97,7 @@
 }
 
 .border-radius-custom {
-  border: #6b8e71 2px solid !important;
+  border: #45654a 2px solid !important;
   border-radius: 20px;
 }
 
@@ -152,7 +152,7 @@ body {
 
 /* Hora */
 .time {
-  background: #6b8e71;
+  background: #4c6951;
   color: #fff;
   padding: 10px 22px;
   border-radius: 999px;
@@ -322,7 +322,7 @@ body {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: #6b8e71;
+  background: #4c6951;
   border: none;
   color: white;
   cursor: pointer;
@@ -345,9 +345,15 @@ body {
 }
 
 .music-control.playing {
-  background: #8fbc8f;
+  background: #4c6951;
   animation: pulse 2s infinite;
 }
+
+.br-sm {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
 
 @keyframes pulse {
   0%, 100% {
