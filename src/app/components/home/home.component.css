@@ -165,8 +165,8 @@ body {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  border: 3px solid #cfd4d6;
-  background: #f6f1e9;
+  border: 3px solid #4c6951;
+  background: #f5f1ed;
   margin: 30px auto 20px;
   display: flex;
   align-items: center;
@@ -178,13 +178,13 @@ body {
   width: 36px;
   height: 36px;
   fill: none;
-  stroke: #415a77;
+  stroke: #4c6951;
   stroke-width: 1.8;
 }
 
 /* Texto */
 .timeline-item h3 {
-  color: #415a77;
+  color: #4c6951;
   font-weight: normal;
 }
 
