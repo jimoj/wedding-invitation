@@ -365,18 +365,6 @@
         </div>
         <div>
           <label
-            class="text-xs md:text-sm font-medium text-sage-dark block mb-1"
-            >Email (opcional)</label
-          >
-          <input
-            type="email"
-            placeholder="tu@email.com"
-            formControlName="email"
-            class="w-full px-3 py-2 border border-sage/30 rounded-md bg-ivory text-sage-dark text-sm focus:outline-none focus:border-sage-dark"
-          />
-        </div>
-        <div>
-          <label
             class="text-xs md:text-sm font-medium text-sage-dark block mb-2"
             >¿Asistirás? *</label
           >
@@ -411,9 +399,18 @@
         <div>
           <label
             class="text-xs md:text-sm font-medium text-sage-dark block mb-2"
-            >Tipo de menú</label
+            >Tipo de menú *</label
           >
           <div class="space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                value="normal"
+                (change)="onMenuTypeChange('normal', $event)"
+                class="w-4 h-4 border-sage-dark text-sage-dark"
+              />
+              <span class="text-xs md:text-sm text-sage-dark">Sin restricciones</span>
+            </label>
             <label class="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
@@ -478,10 +475,10 @@
         <div>
           <label
             class="text-xs md:text-sm font-medium text-sage-dark block mb-1"
-            >Mensaje (opcional)</label
+            >Dudas y preguntas</label
           >
           <textarea
-            placeholder="Escríbenos unas palabras..."
+            placeholder="Si tienes alguna pregunta déjanosla aquí"
             formControlName="message"
             rows="3"
             class="w-full px-3 py-2 border border-sage/30 rounded-md bg-ivory text-sage-dark text-sm focus:outline-none focus:border-sage-dark"

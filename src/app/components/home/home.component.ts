@@ -87,9 +87,8 @@ export class HomeComponent implements OnInit {
 
   rspvForm = new FormGroup({
     name: new FormControl('', Validators.required),
-    email: new FormControl(''),
     attending: new FormControl(null, Validators.required),
-    menutype: new FormControl<string[]>([],),
+    menutype: new FormControl<string[]>([], Validators.required),
     otherMenuType: new FormControl(''),
     busRequired: new FormControl('', Validators.required),
     message: new FormControl(''),
@@ -272,7 +271,6 @@ export class HomeComponent implements OnInit {
 
         const formData = {
           name: this.rspvForm.value.name,
-          email: this.rspvForm.value.email,
           attending: this.rspvForm.value.attending,
           menutype: menuTypes,
           busRequired: this.rspvForm.value.busRequired,
