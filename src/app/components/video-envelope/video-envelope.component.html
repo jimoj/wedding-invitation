@@ -1,4 +1,5 @@
 <div class="video-container" [class.ending]="isEnding">
+  <div class="guest-names" *ngIf="guestNames">{{ guestNames }}</div>
   <div class="video-wrapper" [class.playing]="isPlaying">
     <video
       #videoElement

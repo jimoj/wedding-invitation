@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,12 +13,22 @@ export class VideoEnvelopeComponent {
   @ViewChild('videoElement') videoElement!: ElementRef<HTMLVideoElement>;
   isPlaying = false;
   isEnding = false;
-  // Duración de la animación de salida (ms). Mantener sincronizado con CSS.
+  guestNames: string | null = null;
   private fadeDurationMs = 700;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute) {
+    this.route.queryParamMap.subscribe(params => {
+      const raw = params.get('invitados');
+      if (raw) {
+        const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+        const names = raw.split(',').map(n => cap(n.trim()));
+        this.guestNames = names.length > 1
+          ? `${names[0]} y ${names[1]}`
+          : names[0];
+      }
+    });
+  }
 
-  // Reproducir solo cuando el usuario hace click sobre el vídeo
   onVideoClick(): void {
     const el = this.videoElement?.nativeElement;
     if (!el) return;

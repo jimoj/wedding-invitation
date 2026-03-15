@@ -96,3 +96,25 @@
   font-family: 'Georgia', serif;
   letter-spacing: 0.5px;
 }
+
+.guest-names {
+  position: absolute;
+  bottom:10%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Birthstone', cursive;
+  font-weight: 400;
+  font-size: 3.5rem;
+  letter-spacing: 0.05em;
+  color: #2c2416;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .guest-names {
+    font-size: 3rem;
+    bottom: 25%;
+  }
+}
