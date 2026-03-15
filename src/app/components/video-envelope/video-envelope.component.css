@@ -107,7 +107,10 @@
   font-size: 3.5rem;
   letter-spacing: 0.05em;
   color: #2c2416;
-  white-space: nowrap;
+  white-space: normal;
+  text-align: center;
+  width: 70%;
+  line-height: 1.2;
   pointer-events: none;
   z-index: 10;
 }
@@ -116,5 +119,6 @@
   .guest-names {
     font-size: 3rem;
     bottom: 25%;
+    width: 85%;
   }
 }
