@@ -146,6 +146,7 @@ h1, h2, h3, h4, h5, h6 {
 .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .grid-cols-7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
 
+.space-y-2 > * + * { margin-top: 0.50rem; }
 .space-y-3 > * + * { margin-top: 0.75rem; }
 .space-y-6 > * + * { margin-top: 1.5rem; }
 
