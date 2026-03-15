@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { SupabaseService } from '../../services/supabase.service';
+import { PhotoCarouselComponent } from '../photo-carousel/photo-carousel.component';
 
 interface TimelineEvent {
   time: string;
@@ -26,7 +27,7 @@ interface CountdownTime {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, PhotoCarouselComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
@@ -50,7 +51,7 @@ export class HomeComponent implements OnInit {
     {
       time: '13:00',
       title: 'Llegada de invitados',
-      description: 'Recepción y bienvenida',
+      description: 'Esto empieza...',
       icon: 'heart',
     },
     {
@@ -62,25 +63,25 @@ export class HomeComponent implements OnInit {
     {
       time: '14:30',
       title: 'Cóctel',
-      description: 'Aperitivos y bebidas',
+      description: 'También es nuestra parte favorita',
       icon: 'wine',
     },
     {
       time: '16:30',
       title: 'Comida',
-      description: 'Comida y celebración',
+      description: 'Más comida*',
       icon: 'utensils',
     },
     {
       time: '18:30',
       title: 'Fiesta',
-      description: '¡A bailar y beber!',
+      description: 'Cuidado con los chupitos',
       icon: 'music',
     },
     {
       time: '23:30',
       title: 'Fin de fiesta',
-      description: 'Despedida y buenos recuerdos',
+      description: '¿Y algún que otro mareo?',
       icon: 'party',
     },
   ];

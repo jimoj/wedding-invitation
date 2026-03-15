@@ -1,0 +1,17 @@
+<section class="section-padding">
+  <div class="max-w-5xl mx-auto flex flex-col items-center w-full">
+    <div class="text-center mb-12 animate-on-scroll animate-fade-up">
+      <h2 class="font-script text-3xl md:text-5xl text-ink mb-2">Nuestros momentos</h2>
+      <p class="text-ink/70 font-body tracking-wide text-sm md:text-base">Los que nos han traído hasta aquí</p>
+    </div>
+    <div class="carousel-wrapper">
+      <div class="carousel-track">
+        @for (photo of track; track $index) {
+          <div class="carousel-item">
+            <img [src]="photo" alt="Foto" />
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
