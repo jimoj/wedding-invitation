@@ -22,9 +22,11 @@ export class VideoEnvelopeComponent {
       if (raw) {
         const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
         const names = raw.split(',').map(n => cap(n.trim()));
-        this.guestNames = names.length > 1
-          ? `${names[0]} y ${names[1]}`
-          : names[0];
+        if (names.length === 1) {
+          this.guestNames = names[0];
+        } else {
+          this.guestNames = names.slice(0, -1).join(', ') + ' y ' + names[names.length - 1];
+        }
       }
     });
   }

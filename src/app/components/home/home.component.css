@@ -150,6 +150,17 @@ body {
   transition: transform 0.3s ease;
 }
 
+@media (min-width: 768px) {
+  .timeline-item:hover .icon {
+    transform: scale(1.15);
+  }
+
+  .timeline-item:hover .time {
+    opacity: 0.5;
+    filter: blur(1px);
+  }
+}
+
 /* Hora */
 .time {
   background: #4c6951;
@@ -193,15 +204,6 @@ body {
   font-size: 14px;
 }
 
-/* Hover */
-.timeline-item:hover .icon {
-  transform: scale(1.15);
-}
-
-.timeline-item:hover .time {
-  opacity: 0.5;
-  filter: blur(1px);
-}
 
 .hero-section {
   background-attachment: scroll;
