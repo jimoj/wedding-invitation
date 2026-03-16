@@ -116,9 +116,35 @@ export class HomeComponent implements OnInit {
   private initAudio(): void {
     this.audio = new Audio('assets/music.mp3');
     this.audio.loop = true;
-    this.audio.volume = 0.3;
-    this.audio.play().catch(e => console.log('Audio play failed:', e));
+    this.audio.volume = 0;
+    this.audio.muted = true;
+
+    this.audio.play().then(() => {
       this.isMusicPlaying = true;
+      // Fade in de volumen tras 2 segundos
+      setTimeout(() => {
+        this.audio!.muted = false;
+        const fadeIn = setInterval(() => {
+          if (this.audio!.volume < 0.3) {
+            this.audio!.volume = Math.min(this.audio!.volume + 0.02, 0.3);
+          } else {
+            clearInterval(fadeIn);
+          }
+        }, 100);
+      }, 500);
+    }).catch(() => {
+      const tryPlay = () => {
+        this.audio!.muted = false;
+        this.audio!.volume = 0.3;
+        this.audio!.play().then(() => {
+          this.isMusicPlaying = true;
+          document.removeEventListener('click', tryPlay);
+          document.removeEventListener('touchstart', tryPlay);
+        }).catch(() => {});
+      };
+      document.addEventListener('click', tryPlay);
+      document.addEventListener('touchstart', tryPlay);
+    });
   }
 
   toggleMusic(): void {
