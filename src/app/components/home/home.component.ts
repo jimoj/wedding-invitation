@@ -116,34 +116,32 @@ export class HomeComponent implements OnInit {
   private initAudio(): void {
     this.audio = new Audio('assets/music.mp3');
     this.audio.loop = true;
-    this.audio.volume = 0;
-    this.audio.muted = true;
+    this.audio.volume = 0.3;
+
+    const tryPlay = () => {
+      if (this.isMusicPlaying) return;
+      this.audio!.play().then(() => {
+        this.isMusicPlaying = true;
+        document.removeEventListener('click', tryPlay);
+        document.removeEventListener('touchstart', tryPlay);
+        document.removeEventListener('scroll', tryPlay);
+      }).catch(() => {});
+    };
 
     this.audio.play().then(() => {
-      this.isMusicPlaying = true;
-      // Fade in de volumen tras 2 segundos
-      setTimeout(() => {
-        this.audio!.muted = false;
-        const fadeIn = setInterval(() => {
-          if (this.audio!.volume < 0.3) {
-            this.audio!.volume = Math.min(this.audio!.volume + 0.02, 0.3);
-          } else {
-            clearInterval(fadeIn);
-          }
-        }, 100);
-      }, 500);
-    }).catch(() => {
-      const tryPlay = () => {
-        this.audio!.muted = false;
-        this.audio!.volume = 0.3;
-        this.audio!.play().then(() => {
-          this.isMusicPlaying = true;
-          document.removeEventListener('click', tryPlay);
-          document.removeEventListener('touchstart', tryPlay);
-        }).catch(() => {});
-      };
+      // Verificamos que realmente está sonando
+      if (!this.audio!.paused) {
+        this.isMusicPlaying = true;
+        return;
+      }
+      // Si no suena registramos listeners
       document.addEventListener('click', tryPlay);
       document.addEventListener('touchstart', tryPlay);
+      document.addEventListener('scroll', tryPlay);
+    }).catch(() => {
+      document.addEventListener('click', tryPlay);
+      document.addEventListener('touchstart', tryPlay);
+      document.addEventListener('scroll', tryPlay);
     });
   }
 
