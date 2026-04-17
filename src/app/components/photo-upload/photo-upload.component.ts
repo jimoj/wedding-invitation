@@ -109,9 +109,8 @@ export class PhotoUploadComponent {
     );
 
     this.isUploading = false;
-    this.allDone = this.files
-      .filter(f => f.error === null)
-      .every(f => f.status === 'done');
+    const attempted = this.files.filter(f => f.error === null);
+    this.allDone = attempted.length > 0 && attempted.every(f => f.status === 'done');
   }
 
   private async uploadOne(item: FileItem): Promise<void> {
