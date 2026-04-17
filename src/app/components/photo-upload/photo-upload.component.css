@@ -54,6 +54,24 @@
   padding: 0;
 }
 
+.preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.retry-btn {
+  font-size: 0.75rem;
+  color: var(--color-sage-dark);
+  text-decoration: underline;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: center;
+  font-family: 'Lora', serif;
+}
+
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

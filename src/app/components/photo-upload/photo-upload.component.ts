@@ -38,6 +38,10 @@ export class PhotoUploadComponent {
     return this.files.some(f => f.error === null && f.status === 'pending');
   }
 
+  get uploadableCount(): number {
+    return this.files.filter(f => !(f.error !== null && f.status === 'pending')).length;
+  }
+
   onFilesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.files) return;
@@ -96,26 +100,35 @@ export class PhotoUploadComponent {
     );
 
     this.isUploading = false;
-    this.allDone = this.files.every(f => f.status === 'done');
+    this.allDone = this.files
+      .filter(f => !(f.error !== null && f.status === 'pending'))
+      .every(f => f.status === 'done');
   }
 
   private async uploadOne(item: FileItem): Promise<void> {
     item.status = 'uploading';
+    let uploadUrl: string;
     try {
-      const { uploadUrl } = await this.uploadService.getPresignedUrl(
+      const result = await this.uploadService.getPresignedUrl(
         item.file.name,
         item.file.type
       );
+      uploadUrl = result.uploadUrl;
+    } catch {
+      item.status = 'error';
+      item.error = 'Error de conexión, inténtalo de nuevo';
+      return;
+    }
 
+    try {
       await this.uploadService.uploadFile(uploadUrl, item.file, (p: UploadProgress) => {
         item.progress = p.percentage;
       });
-
       item.status = 'done';
       item.progress = 100;
     } catch {
       item.status = 'error';
-      item.error = `No se pudo subir "${item.file.name}", inténtalo de nuevo`;
+      item.error = `No se pudo subir ${item.file.name}, inténtalo de nuevo`;
     }
   }
 

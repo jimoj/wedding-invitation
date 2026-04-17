@@ -58,60 +58,82 @@
         <!-- File preview grid -->
         <div *ngIf="files.length" class="w-full">
           <div class="preview-grid mb-6">
-            <div *ngFor="let item of files; let i = index" class="preview-item">
+            <div *ngFor="let item of files; let i = index" class="preview-wrapper">
+              <div class="preview-item">
 
-              <!-- Image preview -->
-              <img *ngIf="!item.isVideo && item.previewUrl"
-                [src]="item.previewUrl" alt="preview"
-                class="preview-media" />
+                <!-- Image preview -->
+                <img *ngIf="!item.isVideo && item.previewUrl" [src]="item.previewUrl" alt="preview" class="preview-media" />
 
-              <!-- Video placeholder -->
-              <div *ngIf="item.isVideo"
-                class="preview-media bg-ink/10 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="1.5" class="text-ink/40">
-                  <polygon points="5 3 19 12 5 21 5 3"/>
-                </svg>
-              </div>
-
-              <!-- Error overlay -->
-              <div *ngIf="item.error"
-                class="preview-overlay bg-ink/60 flex flex-col items-center justify-center gap-1 p-2 text-center">
-                <p class="text-white text-xs font-body leading-tight">{{ item.error }}</p>
-              </div>
-
-              <!-- Progress overlay -->
-              <div *ngIf="item.status === 'uploading'"
-                class="preview-overlay bg-ink/40 flex items-end">
-                <div class="w-full h-1 bg-white/30">
-                  <div class="h-full bg-white transition-all" [style.width.%]="item.progress"></div>
+                <!-- Non-image/non-video fallback -->
+                <div *ngIf="!item.isVideo && !item.previewUrl && !item.error"
+                  class="preview-media bg-ink/10 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="1.5" class="text-ink/40">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                    <polyline points="13 2 13 9 20 9"/>
+                  </svg>
                 </div>
+
+                <!-- Video placeholder -->
+                <div *ngIf="item.isVideo" class="preview-media bg-ink/10 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="1.5" class="text-ink/40">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                  </svg>
+                </div>
+
+                <!-- Error overlay (validation error) -->
+                <div *ngIf="item.error && item.status !== 'error'"
+                  class="preview-overlay bg-ink/60 flex flex-col items-center justify-center gap-1 p-2 text-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                    fill="none" stroke="white" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+
+                <!-- Upload error overlay -->
+                <div *ngIf="item.status === 'error'"
+                  class="preview-overlay bg-ink/60 flex flex-col items-center justify-center gap-1 p-2 text-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                    fill="none" stroke="white" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                </div>
+
+                <!-- Progress overlay -->
+                <div *ngIf="item.status === 'uploading'" class="preview-overlay bg-ink/40 flex items-end">
+                  <div class="w-full h-1 bg-white/30">
+                    <div class="h-full bg-white transition-all" [style.width.%]="item.progress"></div>
+                  </div>
+                </div>
+
+                <!-- Done overlay -->
+                <div *ngIf="item.status === 'done'" class="preview-overlay bg-sage-dark/50 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                    fill="none" stroke="white" stroke-width="2">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </div>
+
+                <!-- Remove button -->
+                <button *ngIf="item.status !== 'uploading' && item.status !== 'done'"
+                  (click)="removeFile(i)" class="preview-remove">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="3">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
               </div>
 
-              <!-- Done overlay -->
-              <div *ngIf="item.status === 'done'"
-                class="preview-overlay bg-sage-dark/50 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                  fill="none" stroke="white" stroke-width="2">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-              </div>
-
-              <!-- Remove button (only when not uploading) -->
-              <button *ngIf="item.status !== 'uploading' && item.status !== 'done'"
-                (click)="removeFile(i)"
-                class="preview-remove">
-                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"
-                  fill="none" stroke="currentColor" stroke-width="3">
-                  <line x1="18" y1="6" x2="6" y2="18"/>
-                  <line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
-              </button>
-
-              <!-- Retry button -->
+              <!-- Retry button OUTSIDE preview-item to avoid overflow:hidden clipping -->
               <button *ngIf="item.status === 'error'"
                 (click)="retryFile(item)"
-                class="mt-1 text-xs text-sage-dark font-body underline bg-transparent border-0 cursor-pointer">
+                class="retry-btn">
                 Reintentar
               </button>
             </div>
@@ -125,7 +147,7 @@
               + Añadir más
             </label>
             <span *ngIf="isUploading" class="text-xs text-ink/70 font-body">
-              {{ uploadedCount }} de {{ files.length }} subidos
+              {{ uploadedCount }} de {{ uploadableCount }} subidos
             </span>
           </div>
 
