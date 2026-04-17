@@ -39,7 +39,7 @@ export class PhotoUploadComponent {
   }
 
   get uploadableCount(): number {
-    return this.files.filter(f => !(f.error !== null && f.status === 'pending')).length;
+    return this.files.filter(f => f.error === null && f.status === 'pending').length;
   }
 
   onFilesSelected(event: Event): void {
@@ -50,13 +50,13 @@ export class PhotoUploadComponent {
     this.globalError = null;
     this.allDone = false;
 
-    if (selected.length > MAX_FILES) {
+    if (this.files.length + selected.length > MAX_FILES) {
       this.globalError = `Puedes subir un máximo de ${MAX_FILES} archivos a la vez`;
       input.value = '';
       return;
     }
 
-    this.files = selected.map(file => {
+    const newItems: FileItem[] = selected.map(file => {
       const isVideo = file.type.startsWith('video/');
       const isImage = file.type.startsWith('image/');
       let error: string | null = null;
@@ -79,6 +79,7 @@ export class PhotoUploadComponent {
       };
     });
 
+    this.files = [...this.files, ...newItems];
     input.value = '';
   }
 
@@ -86,6 +87,14 @@ export class PhotoUploadComponent {
     const item = this.files[index];
     if (item.previewUrl) URL.revokeObjectURL(item.previewUrl);
     this.files.splice(index, 1);
+  }
+
+  clearAll(): void {
+    this.files.forEach(item => {
+      if (item.previewUrl) URL.revokeObjectURL(item.previewUrl);
+    });
+    this.files = [];
+    this.allDone = false;
   }
 
   async uploadAll(): Promise<void> {
@@ -101,7 +110,7 @@ export class PhotoUploadComponent {
 
     this.isUploading = false;
     this.allDone = this.files
-      .filter(f => !(f.error !== null && f.status === 'pending'))
+      .filter(f => f.error === null)
       .every(f => f.status === 'done');
   }
 

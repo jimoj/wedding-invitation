@@ -418,3 +418,10 @@ button:focus { outline: none; }
 section > div:first-child {
   text-align: center;
 }
+
+/* Photo upload utility classes */
+.border-b-2 { border-bottom-width: 2px; border-bottom-style: solid; }
+.hover\:text-sage-dark\/70:hover { color: rgba(76, 105, 81, 0.7); }
+.hover\:border-sage-dark\/70:hover { border-color: rgba(76, 105, 81, 0.7); }
+.disabled\:opacity-40:disabled { opacity: 0.4; }
+.disabled\:cursor-not-allowed:disabled { cursor: not-allowed; }
