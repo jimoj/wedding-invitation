@@ -115,21 +115,8 @@ export class PhotoUploadComponent {
 
   private async uploadOne(item: FileItem): Promise<void> {
     item.status = 'uploading';
-    let uploadUrl: string;
     try {
-      const result = await this.uploadService.getPresignedUrl(
-        item.file.name,
-        item.file.type
-      );
-      uploadUrl = result.uploadUrl;
-    } catch {
-      item.status = 'error';
-      item.error = 'Error de conexión, inténtalo de nuevo';
-      return;
-    }
-
-    try {
-      await this.uploadService.uploadFile(uploadUrl, item.file, (p: UploadProgress) => {
+      await this.uploadService.uploadFile(item.file, (p: UploadProgress) => {
         item.progress = p.percentage;
       });
       item.status = 'done';
