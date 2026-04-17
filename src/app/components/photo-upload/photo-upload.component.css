@@ -1,0 +1,64 @@
+.upload-dropzone {
+  border: 2px dashed rgba(143, 168, 148, 0.5);
+  border-radius: 1rem;
+  padding: 3rem 2rem;
+  background-color: var(--color-ivory);
+  transition: border-color 0.2s, background-color 0.2s;
+  min-height: 220px;
+}
+
+.upload-dropzone:hover {
+  border-color: var(--color-sage-dark);
+  background-color: rgba(143, 168, 148, 0.05);
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.preview-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: var(--color-ivory);
+}
+
+.preview-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.preview-remove {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(44, 36, 22, 0.7);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 1s linear infinite;
+}
