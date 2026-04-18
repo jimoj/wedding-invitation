@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UploadService, UploadProgress } from '../../services/upload.service';
+import { GalleryService, GalleryFile } from '../../services/gallery.service';
 
 const IMAGE_MAX_BYTES = 15 * 1024 * 1024;
 const VIDEO_MAX_BYTES = 200 * 1024 * 1024;
@@ -22,13 +23,50 @@ export interface FileItem {
   templateUrl: './photo-upload.component.html',
   styleUrls: ['./photo-upload.component.css'],
 })
-export class PhotoUploadComponent {
+export class PhotoUploadComponent implements OnInit {
+  readonly r2PublicUrl = 'https://pub-badf165a61b24d1ab3459cd2f3a44885.r2.dev';
+
   files: FileItem[] = [];
   globalError: string | null = null;
   isUploading = false;
   allDone = false;
 
-  constructor(private uploadService: UploadService) {}
+  galleryFiles: GalleryFile[] = [];
+  galleryLoading = true;
+  galleryError: string | null = null;
+
+  constructor(
+    private uploadService: UploadService,
+    private galleryService: GalleryService,
+  ) {}
+
+  ngOnInit(): void {
+    this.loadGallery();
+  }
+
+  async loadGallery(): Promise<void> {
+    this.galleryLoading = true;
+    this.galleryError = null;
+    try {
+      this.galleryFiles = await this.galleryService.listFiles();
+    } catch {
+      this.galleryError = 'No se pudo cargar la galería';
+    } finally {
+      this.galleryLoading = false;
+    }
+  }
+
+  downloadUrl(key: string): string {
+    return `${this.r2PublicUrl}/${key}`;
+  }
+
+  get imageCount(): number {
+    return this.galleryFiles.filter(f => f.isImage).length;
+  }
+
+  get videoCount(): number {
+    return this.galleryFiles.filter(f => f.isVideo).length;
+  }
 
   get uploadedCount(): number {
     return this.files.filter(f => f.status === 'done').length;
@@ -104,13 +142,15 @@ export class PhotoUploadComponent {
     this.isUploading = true;
     this.globalError = null;
 
-    await Promise.all(
-      pending.map(item => this.uploadOne(item))
-    );
+    await Promise.all(pending.map(item => this.uploadOne(item)));
 
     this.isUploading = false;
     const attempted = this.files.filter(f => f.error === null);
     this.allDone = attempted.length > 0 && attempted.every(f => f.status === 'done');
+
+    if (this.allDone) {
+      this.loadGallery();
+    }
   }
 
   private async uploadOne(item: FileItem): Promise<void> {
