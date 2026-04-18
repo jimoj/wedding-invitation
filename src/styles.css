@@ -95,6 +95,7 @@ h1, h2, h3, h4, h5, h6 {
 .text-ink\/70 { color: rgba(44, 36, 22, 0.7); }
 .text-ink\/50 { color: rgba(44, 36, 22, 0.5); }
 .text-ink\/40 { color: rgba(44, 36, 22, 0.4); }
+.text-ink\/30 { color: rgba(44, 36, 22, 0.3); }
 .text-ink\/20 { color: rgba(44, 36, 22, 0.2); }
 .text-ink\/10 { color: rgba(44, 36, 22, 0.1); }
 
@@ -213,6 +214,7 @@ h1, h2, h3, h4, h5, h6 {
 .py-5 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
 .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
 .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+.py-24 { padding-top: 6rem; padding-bottom: 6rem; }
 
 .pt-0 { padding-top: 0; }
 .pt-1 { padding-top: 0.25rem; }
@@ -418,3 +420,10 @@ button:focus { outline: none; }
 section > div:first-child {
   text-align: center;
 }
+
+/* Photo upload utility classes */
+.border-b-2 { border-bottom-width: 2px; border-bottom-style: solid; }
+.hover\:text-sage-dark\/70:hover { color: rgba(76, 105, 81, 0.7); }
+.hover\:border-sage-dark\/70:hover { border-color: rgba(76, 105, 81, 0.7); }
+.disabled\:opacity-40:disabled { opacity: 0.4; }
+.disabled\:cursor-not-allowed:disabled { cursor: not-allowed; }
