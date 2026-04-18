@@ -56,8 +56,11 @@
 
       <!-- Masonry gallery -->
       <div *ngIf="!loading && !error && files.length" class="gallery-masonry">
-        <div *ngFor="let file of files; let i = index"
+        <a *ngFor="let file of files; let i = index"
           class="gallery-item"
+          [href]="downloadUrl(file.key)"
+          download
+          target="_blank"
           [style.animation-delay]="(i * 30) + 'ms'">
 
           <!-- Image -->
@@ -84,13 +87,10 @@
             </svg>
           </div>
 
-          <!-- Hover overlay -->
+          <!-- Hover overlay — solo en escritorio -->
           <div class="gallery-overlay">
             <p class="gallery-overlay-name">{{ file.filename }}</p>
-            <a [href]="downloadUrl(file.key)"
-              download
-              target="_blank"
-              class="gallery-download-btn">
+            <span class="gallery-download-btn">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
                 fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -98,10 +98,10 @@
                 <line x1="12" x2="12" y1="15" y2="3"/>
               </svg>
               Descargar
-            </a>
+            </span>
           </div>
 
-        </div>
+        </a>
       </div>
 
     </div>
