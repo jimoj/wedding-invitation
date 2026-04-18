@@ -54,18 +54,18 @@
         </a>
       </div>
 
-      <!-- Gallery grid -->
-      <div *ngIf="!loading && !error && files.length" class="gallery-grid">
+      <!-- Masonry gallery -->
+      <div *ngIf="!loading && !error && files.length" class="gallery-masonry">
         <div *ngFor="let file of files; let i = index"
           class="gallery-item"
-          [style.animation-delay]="(i * 50) + 'ms'">
+          [style.animation-delay]="(i * 30) + 'ms'">
 
           <!-- Image -->
           <img *ngIf="file.isImage"
             [src]="downloadUrl(file.key)"
             [alt]="file.filename"
             class="gallery-thumb"
-            loading="lazy" />
+            [loading]="i === 0 ? 'eager' : 'lazy'" />
 
           <!-- Video placeholder -->
           <div *ngIf="file.isVideo" class="gallery-thumb gallery-video-placeholder">

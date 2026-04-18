@@ -1,48 +1,48 @@
-/* Grid layout */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
+/* Masonry layout using CSS columns */
+.gallery-masonry {
+  columns: 2;
+  column-gap: 0.5rem;
 }
 
 @media (min-width: 640px) {
-  .gallery-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .gallery-masonry {
+    columns: 3;
   }
 }
 
 @media (min-width: 1024px) {
-  .gallery-grid {
-    grid-template-columns: repeat(4, 1fr);
+  .gallery-masonry {
+    columns: 4;
   }
 }
 
-/* Grid item */
+/* Grid item — breaks inside columns */
 .gallery-item {
   position: relative;
-  aspect-ratio: 1;
+  break-inside: avoid;
   overflow: hidden;
   border-radius: 0.5rem;
   background-color: var(--color-ivory);
   cursor: pointer;
+  margin-bottom: 0.5rem;
   animation: fadeIn 0.4s ease both;
 }
 
-/* Thumbnail */
+/* Thumbnail — natural proportions */
 .gallery-thumb {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
   display: block;
   transition: transform 0.4s ease;
 }
 
 .gallery-item:hover .gallery-thumb {
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
-/* Video placeholder */
+/* Video placeholder — fixed height since it has no natural ratio */
 .gallery-video-placeholder {
+  aspect-ratio: 4 / 3;
   background-color: var(--color-ink);
   display: flex;
   align-items: center;
@@ -52,6 +52,7 @@
 
 /* Unknown type placeholder */
 .gallery-unknown-placeholder {
+  aspect-ratio: 4 / 3;
   background-color: rgba(44, 36, 22, 0.08);
   display: flex;
   align-items: center;
