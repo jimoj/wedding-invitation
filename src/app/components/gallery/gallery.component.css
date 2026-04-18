@@ -16,8 +16,10 @@
   }
 }
 
-/* Grid item — breaks inside columns */
+/* Grid item */
 .gallery-item {
+  display: block;
+  text-decoration: none;
   position: relative;
   break-inside: avoid;
   overflow: hidden;
@@ -26,6 +28,8 @@
   cursor: pointer;
   margin-bottom: 0.5rem;
   animation: fadeIn 0.4s ease both;
+  /* Enables long-press "Save image / Download" menu on iOS/Android */
+  -webkit-touch-callout: default;
 }
 
 /* Thumbnail — natural proportions */
@@ -40,7 +44,7 @@
   transform: scale(1.04);
 }
 
-/* Video placeholder — fixed height since it has no natural ratio */
+/* Video placeholder — fixed ratio since video has no natural size */
 .gallery-video-placeholder {
   aspect-ratio: 4 / 3;
   background-color: var(--color-ink);
@@ -60,7 +64,7 @@
   color: var(--color-ink-light);
 }
 
-/* Hover overlay */
+/* Hover overlay — hidden on mobile */
 .gallery-overlay {
   position: absolute;
   inset: 0;
@@ -73,10 +77,22 @@
   gap: 0.5rem;
   opacity: 0;
   transition: opacity 0.25s ease;
+  pointer-events: none;
 }
 
-.gallery-item:hover .gallery-overlay {
-  opacity: 1;
+@media (hover: none) {
+  /* Touch devices: never show the overlay */
+  .gallery-overlay {
+    display: none;
+  }
+}
+
+@media (hover: hover) {
+  /* Pointer devices: show on hover */
+  .gallery-item:hover .gallery-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 /* File name in overlay */
@@ -91,7 +107,7 @@
   white-space: nowrap;
 }
 
-/* Download button */
+/* Download button (desktop overlay) */
 .gallery-download-btn {
   display: inline-flex;
   align-items: center;
